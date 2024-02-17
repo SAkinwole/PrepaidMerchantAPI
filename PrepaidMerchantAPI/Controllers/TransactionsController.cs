@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PrepaidMerchantAPI.DTOs;
 using PrepaidMerchantAPI.Entities;
-using PrepaidMerchantAPI.Services;
+using PrepaidMerchantAPI.Services.Interface;
 using System.Web.Http.ModelBinding;
 
 namespace PrepaidMerchantAPI.Controllers

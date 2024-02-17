@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrepaidMerchantAPI.DTOs;
 using PrepaidMerchantAPI.Entities;
+using PrepaidMerchantAPI.Services.Interface;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace PrepaidMerchantAPI.Services
+namespace PrepaidMerchantAPI.Services.Implementation
 {
     public class TransactionService : ITransactionService
     {

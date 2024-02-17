@@ -1,7 +1,7 @@
 ﻿using PrepaidMerchantAPI.DTOs;
 using PrepaidMerchantAPI.Entities;
 
-namespace PrepaidMerchantAPI.Services
+namespace PrepaidMerchantAPI.Services.Interface
 {
     public interface ITransactionService
     {

@@ -10,5 +10,7 @@ namespace PrepaidMerchantAPI.Entities
         }
 
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<BalanceManagement> BalanceManagements { get; set; }
     }
 }
