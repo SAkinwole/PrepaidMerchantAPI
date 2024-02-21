@@ -38,6 +38,19 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
+
+        public Response SearchTransaction(string searchTerm)
+        {
+            Response response = new Response();
+            var transaction = _context.Transactions.Where(x => x.CardNumber.Contains(searchTerm) || x.MerchantInfo.Contains(searchTerm)
+                                                || x.TerminalId.Contains(searchTerm) || x.TransactionAmount.Contains(searchTerm)).ToList();
+
+            response.ResponseCode = "00";
+            response.ResponseMessage = "Successful";
+            response.Data = transaction;
+
+            return response;
+        }
         public Response GetAllApprovedTransactions()
         {
             Response response = new Response();

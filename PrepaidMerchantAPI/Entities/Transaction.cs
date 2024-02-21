@@ -8,7 +8,7 @@ namespace PrepaidMerchantAPI.Entities
         [Key]
         public int Id { get; set; }
         public string CardNumber { get; set; }
-        public decimal TransactionAmount { get; set; }
+        public string TransactionAmount { get; set; }
         public string TerminalId { get; set; }
         public string ReferenceNumber { get; set; }
         public TranStatus TransactionStatus { get; set; }
@@ -32,12 +32,12 @@ namespace PrepaidMerchantAPI.Entities
 
     public enum TranStatus
     {
-       Approved,
+       Approved = 1,
        Failed
     }
     public enum TranType
     {
-       Income,
+       Income = 1,
        Outcome
     }
 }

@@ -14,6 +14,7 @@ namespace PrepaidMerchantAPI.Controllers
             _CardService = cardService;
         }
 
+        [HttpGet]
         public IActionResult GetCards(long customerId)
         {
             var result = _CardService.GetAllCards(customerId);

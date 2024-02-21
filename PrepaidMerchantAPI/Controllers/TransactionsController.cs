@@ -17,19 +17,6 @@ namespace PrepaidMerchantAPI.Controllers
             _transectionService = transactionService;
         }
 
-        //[HttpPost]
-        //[Route("create-new-transaction")]
-        //public IActionResult CreateNewTransaction([FromBody] CreateTransactionDto request)
-        //{
-        //    if (!ModelState.IsValid) return BadRequest(request);
-        //    var transaction = new Transaction
-        //    {
-        //        TerminalId = request.
-        //    }
-
-        //    return Ok(_service.CreateNewTransaction(transaction));
-        //}
-
         [HttpGet("get-alltransactions")]
         public IActionResult GetAllTransactions()
         {
@@ -51,6 +38,14 @@ namespace PrepaidMerchantAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
             var transactions = _transectionService.GetAllFailedTransactions();
+            return Ok(transactions);
+        }
+
+        [HttpGet("search-transanctions")]
+        public IActionResult SearchTransactions(string searchString)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            var transactions = _transectionService.SearchTransaction(searchString);
             return Ok(transactions);
         }
     }

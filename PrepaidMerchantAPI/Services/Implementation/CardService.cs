@@ -19,12 +19,12 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             response.Data = cards;
             response.ResponseCode = "00";
-            response.ResponseMessage = "List of Customer Cards returnes successfully";
+            response.ResponseMessage = "List of Customer Cards returned successfully";
 
             return response;
-
-
         }
+
+       // public Response 
     }
 
 }

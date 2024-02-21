@@ -18,8 +18,8 @@
 
         public enum Trantype
         {
-            Out = 1,
-            In
+            In = 1,
+            Out
         }
     }
 

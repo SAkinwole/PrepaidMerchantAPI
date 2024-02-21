@@ -7,6 +7,7 @@ namespace PrepaidMerchantAPI.Services.Interface
     {
         Response GetAllTransaction();
         Response CreateNewTransaction(Transaction transaction);
+        Response SearchTransaction(string searchTerm);
         Response FindTransactionByDate(DateTime date);
         Response GetAllApprovedTransactions();
         Response GetAllFailedTransactions();
