@@ -23,8 +23,6 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
-
-       // public Response 
     }
 
 }

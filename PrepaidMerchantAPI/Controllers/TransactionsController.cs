@@ -48,5 +48,13 @@ namespace PrepaidMerchantAPI.Controllers
             var transactions = _transectionService.SearchTransaction(searchString);
             return Ok(transactions);
         }
+
+        [HttpGet("filter-transanction-by-date")]
+        public IActionResult FilterTransactions(DateTime startDate, DateTime endDate)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+            var transactions = _transectionService.FindTransactionByDate(startDate, endDate);
+            return Ok(transactions);
+        }
     }
 }

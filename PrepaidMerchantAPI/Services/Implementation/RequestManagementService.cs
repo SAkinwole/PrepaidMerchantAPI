@@ -1,34 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrepaidMerchantAPI.DTOs;
 using PrepaidMerchantAPI.Entities;
+using PrepaidMerchantAPI.Repository.Interface;
 using PrepaidMerchantAPI.Services.Interface;
 
 namespace PrepaidMerchantAPI.Services.Implementation
 {
     public class RequestManagementService : IRequestManagementService
     {
-        private readonly AppDbContext _context;
-        public RequestManagementService(AppDbContext context)
+        private readonly IRequestManagemetRepo _repo;
+        public RequestManagementService(IRequestManagemetRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
         public Response CreateNewRequest(CreateRequestDto entity)
         {
             Response response = new Response();
 
-            var res = _context.RequestManagements.Add(new RequestManagement
-            {
-                CardScheme = entity.CardScheme,
-                Currency = entity.Currency,
-                Quantity = entity.Quantity,
-                Type = entity.Type,
-                Status = Status.Pending
-            });
-            _context.SaveChanges();
+            _repo.Create(entity);
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Created Successfully";
-            response.Data = res;
+            response.Data = null;
 
             return response;
         }
@@ -36,7 +29,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         {
             Response response = new Response();
 
-            var result = _context.RequestManagements.ToList();
+            var result = _repo.GetAll();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -48,7 +41,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         {
             Response response = new Response();
 
-            var result = _context.RequestManagements.Where(x => x.Status == Status.Pending );
+            var result = _repo.GetAllPending();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -60,7 +53,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         {
             Response response = new Response();
 
-            var result = _context.RequestManagements.Where(x => x.Status == Status.InProgress);
+            var result = _repo.GetAllInProgressRequests();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -72,7 +65,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         {
             Response response = new Response();
 
-            var result = _context.RequestManagements.Where(x => x.Status == Status.Delivered);
+            var result = _repo.GetAllDeliveredRequests();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -84,7 +77,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         {
             Response response = new Response();
 
-            var result = _context.RequestManagements.Where(x => x.Status == Status.ReadyForDelivery);
+            var result = _repo.GetAllReadyRequests();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";

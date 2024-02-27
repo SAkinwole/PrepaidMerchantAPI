@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PrepaidMerchantAPI.DTOs;
 using PrepaidMerchantAPI.Entities;
+using PrepaidMerchantAPI.Repository.Interface;
 using PrepaidMerchantAPI.Services.Interface;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -8,18 +9,15 @@ namespace PrepaidMerchantAPI.Services.Implementation
 {
     public class TransactionService : ITransactionService
     {
-        private readonly AppDbContext _context;
-        public TransactionService(AppDbContext context)
+        private readonly ITransactionRepo _repo;
+        public TransactionService(ITransactionRepo repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         public Response CreateNewTransaction(Transaction transaction)
         {
             Response response = new Response();
-
-            _context.Transactions.Add(transaction);
-            _context.SaveChanges();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Transaction Created Successfully";
@@ -27,10 +25,10 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
-        public Response FindTransactionByDate(DateTime date)
+        public Response FindTransactionByDate(DateTime startDate, DateTime endDate)
         {
             Response response = new Response();
-            var transaction = _context.Transactions.Where(x => x.TransactionDate == date).ToList();
+            var transaction = _repo.FindTransactionByDate(startDate, endDate);
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -38,12 +36,11 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
-
         public Response SearchTransaction(string searchTerm)
         {
             Response response = new Response();
-            var transaction = _context.Transactions.Where(x => x.CardNumber.Contains(searchTerm) || x.MerchantInfo.Contains(searchTerm)
-                                                || x.TerminalId.Contains(searchTerm) || x.TransactionAmount.Contains(searchTerm)).ToList();
+            var transaction = _repo.SearchTransaction(searchTerm);
+
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -54,7 +51,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         public Response GetAllApprovedTransactions()
         {
             Response response = new Response();
-            var transaction = _context.Transactions.Where(x => x.TransactionStatus == TranStatus.Approved).ToList();
+            var transaction = _repo.GetAllApprovedTransactions();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -65,7 +62,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         public Response GetAllFailedTransactions()
         {
             Response response = new Response();
-            var transaction = _context.Transactions.Where(x => x.TransactionStatus == TranStatus.Failed).ToList();
+            var transaction = _repo.GetAllFailedTransactions();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
@@ -76,7 +73,7 @@ namespace PrepaidMerchantAPI.Services.Implementation
         public Response GetAllTransaction()
         {
             Response response = new Response();
-            var transaction = _context.Transactions.ToList();
+            var transaction = _repo.GetAllTransactions();
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
