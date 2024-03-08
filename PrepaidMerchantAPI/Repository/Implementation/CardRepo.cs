@@ -16,5 +16,24 @@ namespace PrepaidMerchantAPI.Repository.Implementation
         {
             return _context.Cards.Where(x => x.CustomerId == customerId).ToList();
         }
+        public IList<Card> GetAllCards()
+        {
+            return _context.Cards.ToList();
+        }
+        public int GetActiveCardCount()
+        {
+            var result = _context.Cards.Where(x => x.CardStatus == CardStatus.Active);
+            return result.Count();
+        }
+        public int GetInactiveCardCount()
+        {
+            var result = _context.Cards.Where(x => x.CardStatus == CardStatus.Inactive);
+            return result.Count();
+        }
+        public int GetExpiredCardCount()
+        {
+            var result = _context.Cards.Where(x => x.CardStatus == CardStatus.Expired);
+            return result.Count();
+        }
     }
 }

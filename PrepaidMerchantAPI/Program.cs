@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PrepaidMerchantAPI.Entities;
+using PrepaidMerchantAPI.Repository.Implementation;
+using PrepaidMerchantAPI.Repository.Interface;
 using PrepaidMerchantAPI.Services.Implementation;
 using PrepaidMerchantAPI.Services.Interface;
 
@@ -13,8 +15,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 });
 
+builder.Services.AddScoped<ITransactionRepo, TransactionRepo>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+
+builder.Services.AddScoped<IRequestManagemetRepo, RequestManagementRepo>();
 builder.Services.AddScoped<IRequestManagementService, RequestManagementService>();
+
+builder.Services.AddScoped<ICardRepo, CardRepo>();
+builder.Services.AddScoped<ICardService, CardService>();
+
+builder.Services.AddScoped<IBalanceManagementRepo, BalanceManagementRepo>();
+builder.Services.AddScoped<IBalanceManagementService, BalanceManagementService>();
 
 builder.Services.AddControllers();
 

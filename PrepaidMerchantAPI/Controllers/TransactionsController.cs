@@ -18,10 +18,10 @@ namespace PrepaidMerchantAPI.Controllers
         }
 
         [HttpGet("get-alltransactions")]
-        public IActionResult GetAllTransactions()
+        public IActionResult GetAllTransactions(int page, int pagesize)
         {
             if (!ModelState.IsValid) return BadRequest();
-            var transactions = _transectionService.GetAllTransaction();
+            var transactions = _transectionService.GetAllTransaction(page, pagesize);
             return Ok(transactions);
         }
 

@@ -24,10 +24,10 @@ namespace PrepaidMerchantAPI.Controllers
         }
 
         [HttpGet("get-allrequests")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int page, int pagesize)
         {
             if (!ModelState.IsValid) return BadRequest();
-            var result = _service.GetAllRequests();
+            var result = _service.GetAllRequests(page, pagesize);
             return Ok(result);
         }
         [HttpGet("get-allpendingrequests")]

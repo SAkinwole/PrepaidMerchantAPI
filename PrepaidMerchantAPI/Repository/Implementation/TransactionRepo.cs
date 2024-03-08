@@ -1,4 +1,5 @@
-﻿using PrepaidMerchantAPI.Entities;
+﻿using PrepaidMerchantAPI.DTOs;
+using PrepaidMerchantAPI.Entities;
 using PrepaidMerchantAPI.Repository.Interface;
 
 namespace PrepaidMerchantAPI.Repository.Implementation
@@ -17,10 +18,24 @@ namespace PrepaidMerchantAPI.Repository.Implementation
                                                 || x.TerminalId.Contains(searchTerm) || x.TransactionAmount.Contains(searchTerm)).ToList();
             return transaction;
         }
-        public IList<Transaction> GetAllTransactions()
+        public TransactionsResponse GetAllTransactions(int page, int pageSize)
         {
-            var result = _context.Transactions.ToList();
-            return result;
+            //var pageSize = 10;
+            var totalCount = _context.Transactions.Count();
+            var pageCount = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            var result = _context.Transactions
+                                .OrderBy(t => t.Id) 
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToList();
+            var response = new TransactionsResponse
+            {
+                Transactions = result,
+                Pages = (int)pageCount,
+                CurrentPage = page
+            };
+            return response;
         }
         public IList<Transaction> GetAllApprovedTransactions()
         {

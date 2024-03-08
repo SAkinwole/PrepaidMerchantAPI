@@ -24,10 +24,23 @@ namespace PrepaidMerchantAPI.Repository.Implementation
             });
             _context.SaveChanges();
         }
-        public IList<RequestManagement> GetAll()
+        public RequestManagementResponse GetAll(int page, int pageSize)
         {
-            var result = _context.RequestManagements.ToList();
-            return result;
+            var totalCount = _context.RequestManagements.Count();
+            var pageCount = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            var result = _context.RequestManagements
+                                .OrderBy(t => t.Id)
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToList();
+            var response = new RequestManagementResponse
+            {
+                Transactions = result,
+                Pages = (int)pageCount,
+                CurrentPage = page
+            };
+            return response;
         }
         public IList<RequestManagement> GetAllPending()
         {

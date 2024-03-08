@@ -9,5 +9,13 @@
         public string AccountNumber { get; set; }
         public string Expiry { get; set; }
         public long CustomerId { get; set; }
+        public CardStatus CardStatus { get; set; }
+    }
+
+    public enum CardStatus
+    {
+        Active =1,
+        Inactive,
+        Expired
     }
 }

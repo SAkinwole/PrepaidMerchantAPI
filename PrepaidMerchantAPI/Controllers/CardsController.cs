@@ -20,5 +20,12 @@ namespace PrepaidMerchantAPI.Controllers
             var result = _CardService.GetAllCards(customerId);
             return Ok(result);
         }
+
+        [HttpGet]
+        public IActionResult GetCardDashboardCount()
+        {
+            var result = _CardService.GetCardDashboardCount();
+            return Ok(result);
+        }
     }
 }

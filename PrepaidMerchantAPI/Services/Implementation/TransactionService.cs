@@ -70,10 +70,10 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
-        public Response GetAllTransaction()
+        public Response GetAllTransaction(int page, int pagesize)
         {
             Response response = new Response();
-            var transaction = _repo.GetAllTransactions();
+            var transaction = _repo.GetAllTransactions(page, pagesize);
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";

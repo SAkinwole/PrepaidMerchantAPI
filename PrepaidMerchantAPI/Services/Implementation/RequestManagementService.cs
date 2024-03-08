@@ -25,11 +25,11 @@ namespace PrepaidMerchantAPI.Services.Implementation
 
             return response;
         }
-        public Response GetAllRequests()
+        public Response GetAllRequests(int page, int pagesize)
         {
             Response response = new Response();
 
-            var result = _repo.GetAll();
+            var result = _repo.GetAll(page, pagesize);
 
             response.ResponseCode = "00";
             response.ResponseMessage = "Successful";
